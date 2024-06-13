@@ -20,7 +20,8 @@ v = Verbose.new(x)
 v.foo() # see the logging line in the console
 ```
 
-You can pass an instance of a [Logger][logger] to it too:
+Instead of printing to the console, you can pass an instance
+of the [Logger][logger] class to the `Verbose` constructor:
 
 ```ruby
 require 'verbose'
