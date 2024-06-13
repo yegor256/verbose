@@ -20,7 +20,7 @@ v = Verbose.new(x)
 v.foo() # see the logging line in the console
 ```
 
-You can pass a logger to it too:
+You can pass an instance of a [Logger][logger] to it too:
 
 ```ruby
 require 'verbose'
@@ -49,3 +49,5 @@ bundle exec rake
 ```
 
 If it's clean and you don't see any error messages, submit your pull request.
+
+[logger]: https://ruby-doc.org/stdlib-2.7.0/libdoc/logger/rdoc/Logger.html
