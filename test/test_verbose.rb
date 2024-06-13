@@ -41,6 +41,15 @@ class TestVerbose < Minitest::Test
     assert(log.to_s.include?('finished in'), log)
   end
 
+  def test_simple_to_stdout
+    obj = Object.new
+    def obj.read(foo)
+      foo
+    end
+    obj = Verbose.new(obj)
+    assert_equal(42, obj.read(42))
+  end
+
   def test_works_with_optional_arguments
     obj = Object.new
     def obj.foo(first, _second, ext1: 'a', ext2: 'b')
