@@ -56,6 +56,7 @@ class Verbose
     params = args.map do |a|
       if a.is_a?(String)
         max = 32
+        a = a.inspect
         if a.length > max
           "#{a[0..(max / 2) - 2]}...#{a[(max / 2) + 1..]}"
         else
