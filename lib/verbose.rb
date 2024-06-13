@@ -37,24 +37,29 @@ class Verbose
   def method_missing(*args)
     start = Time.now
     mtd = args.shift
-    result =
-      if @origin.respond_to?(mtd)
-        params = @origin.method(mtd).parameters
-        reqs = params.count { |p| p[0] == :req }
-        if params.any? { |p| p[0] == :key } && args.size > reqs
-          @origin.__send__(mtd, *args[0...-1], **args.last) do |*a|
-            yield(*a) if block_given?
+    begin
+      result =
+        if @origin.respond_to?(mtd)
+          params = @origin.method(mtd).parameters
+          reqs = params.count { |p| p[0] == :req }
+          if params.any? { |p| p[0] == :key } && args.size > reqs
+            @origin.__send__(mtd, *args[0...-1], **args.last) do |*a|
+              yield(*a) if block_given?
+            end
+          else
+            @origin.__send__(mtd, *args) do |*a|
+              yield(*a) if block_given?
+            end
           end
         else
-          @origin.__send__(mtd, *args) do |*a|
-            yield(*a) if block_given?
-          end
+          super
         end
-      else
-        super
-      end
-    @log.debug("#{mtd}(): finished in #{start.ago}")
-    result
+      @log.debug("#{@origin.class}.#{mtd}(): finished in #{start.ago}")
+      result
+    rescue StandardError => e
+      @log.debug("#{@origin.class}.#{mtd}(): thrown #{e.class} in #{start.ago}")
+      raise e
+    end
   end
 
   def respond_to?(method, include_private = false)
