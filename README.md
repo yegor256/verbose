@@ -17,8 +17,22 @@ Here is how you use it:
 require 'verbose'
 x = MyObject.new
 v = Verbose.new(x)
-v.foo() # check the log
+v.foo() # see the logging line in the console
 ```
+
+You can pass a logger to it too:
+
+```ruby
+require 'verbose'
+require 'logger'
+x = MyObject.new
+v = Verbose.new(x, log: Logger.new(STDOUT))
+v.foo()
+```
+
+I also recommend you to check the
+[`loog`](https://github.com/yegor256/loog) gem,
+for more object-oriented logging.
 
 ## How to contribute
 
