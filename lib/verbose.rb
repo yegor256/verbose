@@ -53,7 +53,21 @@ class Verbose
       super
     end
   ensure
-    msg = "#{@origin.class}.#{mtd}(): finished in #{start.ago}"
+    params = args.map do |a|
+      if a.is_a?(String)
+        max = 32
+        if a.length > max
+          "#{a[0..(max / 2) - 2]}...#{a[(max / 2) + 1..]}"
+        else
+          a
+        end
+      elsif [Integer, Float, TrueClass, FalseClass].include?(a.class)
+        a
+      else
+        a.class
+      end
+    end
+    msg = "#{@origin.class}.#{mtd}(#{params.join(', ')}) in #{start.ago}"
     if @log.respond_to?(:debug)
       @log.debug(msg)
     else

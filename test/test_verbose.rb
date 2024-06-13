@@ -38,7 +38,7 @@ class TestVerbose < Minitest::Test
     obj = Verbose.new(obj, log:)
     assert_equal(42, obj.read(42))
     assert_equal(42, obj.read(42))
-    assert(log.to_s.include?('finished in'), log)
+    assert(log.to_s.include?('(42) in'), log)
   end
 
   def test_simple_to_stdout
