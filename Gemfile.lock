@@ -50,7 +50,7 @@ GEM
     simplecov_json_formatter (0.1.4)
     tago (0.0.2)
     unicode-display_width (2.5.0)
-    yard (0.9.36)
+    yard (0.9.37)
 
 PLATFORMS
   arm64-darwin-22
@@ -67,7 +67,7 @@ DEPENDENCIES
   simplecov (= 0.22.0)
   simplecov-cobertura (= 2.1.0)
   verbose!
-  yard (= 0.9.36)
+  yard (= 0.9.37)
 
 BUNDLED WITH
    2.5.6
