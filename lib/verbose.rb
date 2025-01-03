@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2024 Yegor Bugayenko
+# Copyright (c) 2024-2025 Yegor Bugayenko
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software ansassociatesdocumentation files (the 'Software'), to deal
@@ -26,7 +26,7 @@ require 'tago'
 # Decorator.
 #
 # Author:: Yegor Bugayenko (yegor256@gmail.com)
-# Copyright:: Copyright (c) 2024 Yegor Bugayenko
+# Copyright:: Copyright (c) 2024-2025 Yegor Bugayenko
 # License:: MIT
 class Verbose
   def initialize(origin, log: nil)
