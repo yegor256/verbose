@@ -1,4 +1,4 @@
-# A Decorator that Logs Every Method Call of a Decoratee
+# A Decorator that Logs Every Method Call of a Decorated Object
 
 [![DevOps By Rultor.com](https://www.rultor.com/b/yegor256/verbose)](https://www.rultor.com/p/yegor256/verbose)
 [![We recommend RubyMine](https://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
@@ -17,7 +17,7 @@ Here is how you use it:
 require 'verbose'
 x = MyObject.new
 v = Verbose.new(x)
-v.foo() # see the logging line in the console
+v.foo # see the logging line in the console
 ```
 
 Instead of printing to the console, you can pass an instance
@@ -28,11 +28,11 @@ require 'verbose'
 require 'logger'
 x = MyObject.new
 v = Verbose.new(x, log: Logger.new(STDOUT))
-v.foo()
+v.foo
 ```
 
-I also recommend you to check the
-[`loog`](https://github.com/yegor256/loog) gem,
+I also recommend checking the
+[`loog`](https://github.com/yegor256/loog) gem
 for more object-oriented logging.
 
 ## How to contribute
