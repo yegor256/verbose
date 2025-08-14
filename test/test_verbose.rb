@@ -55,4 +55,18 @@ class TestVerbose < Minitest::Test
     assert_equal(15, v.foo(7, 8))
     assert_equal(43, v.foo(1))
   end
+
+  def test_raises_on_undefined_method
+    obj = Object.new
+    def obj.existing_method
+      42
+    end
+    log = Loog::Buffer.new
+    v = Verbose.new(obj, log:)
+    assert_equal(42, v.existing_method)
+    error = assert_raises(NoMethodError) do
+      v.nonexistent_method('some', 'args')
+    end
+    assert_match(/undefined method `nonexistent_method'/, error.message)
+  end
 end

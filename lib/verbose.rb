@@ -65,7 +65,7 @@ class Verbose
         end
       end
     else
-      super
+      super(mtd, *args)
     end
   ensure
     params = args.map do |a|
