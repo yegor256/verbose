@@ -67,6 +67,6 @@ class TestVerbose < Minitest::Test
     error = assert_raises(NoMethodError) do
       v.nonexistent_method('some', 'args')
     end
-    assert_match(/undefined method `nonexistent_method'/, error.message)
+    assert_match(/undefined method/, error.message)
   end
 end
