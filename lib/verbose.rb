@@ -6,7 +6,39 @@
 require 'time'
 require 'tago'
 
-# Decorator.
+# Decorator that logs method calls to any object, providing transparency
+# into the execution flow by recording method names, parameters, and execution time.
+# This class wraps any Ruby object and intercepts method calls, logging each
+# invocation with its arguments and the time taken to execute.
+#
+# The decorator uses method_missing to intercept all method calls on the wrapped
+# object, logs them with parameter details, and then delegates to the original
+# object. String parameters are truncated for readability, complex objects are
+# shown as their class names, and primitive values are displayed as-is.
+#
+# @example Basic usage with standard output
+#   repository = Verbose.new(Repository.new)
+#   repository.fetch('main')
+#   # Output: Repository.fetch("main") in 23ms
+#
+# @example Using with a custom logger
+#   require 'logger'
+#   logger = Logger.new('app.log')
+#   service = Verbose.new(Service.new, log: logger)
+#   service.process(data: { id: 42 })
+#   # Logs to app.log: Service.process(Hash) in 150ms
+#
+# @example Wrapping objects with blocks
+#   file = Verbose.new(File)
+#   file.open('data.txt', 'r') do |f|
+#     f.read
+#   end
+#   # Output: File.open("data.txt", "r") in 5ms
+#
+# @example Parameter truncation for long strings
+#   parser = Verbose.new(Parser.new)
+#   parser.parse('very long text that exceeds maximum display length...')
+#   # Output: Parser.parse("very long t...lay length...") in 10ms
 #
 # Author:: Yegor Bugayenko (yegor256@gmail.com)
 # Copyright:: Copyright (c) 2024-2025 Yegor Bugayenko
