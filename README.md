@@ -1,4 +1,4 @@
-# A Decorator that Logs Every Method Call of a Decorated Object
+# A Decorator that Logs Every Method Call of a Decoratee
 
 [![DevOps By Rultor.com](https://www.rultor.com/b/yegor256/verbose)](https://www.rultor.com/p/yegor256/verbose)
 [![We recommend RubyMine](https://www.elegantobjects.org/rubymine.svg)](https://www.jetbrains.com/ruby/)
