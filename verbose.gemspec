@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.files = `git ls-files`.split($RS)
   s.rdoc_options = ['--charset=UTF-8']
   s.extra_rdoc_files = ['README.md', 'LICENSE.txt']
-  s.add_runtime_dependency 'loog', '~>0.2'
-  s.add_runtime_dependency 'tago', '~>0.0'
+  s.add_dependency 'loog', '~>0.2'
+  s.add_dependency 'tago', '~>0.0'
   s.metadata['rubygems_mfa_required'] = 'true'
 end
