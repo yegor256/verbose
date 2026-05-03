@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
     'usually when it is a slow-moving object'
   s.authors = ['Yegor Bugayenko']
   s.email = 'yegor256@gmail.com'
-  s.homepage = 'https://github.com/yegor256/verbose.rb'
+  s.homepage = 'https://github.com/yegor256/verbose'
   s.files = `git ls-files | grep -v -E '^(test/|\\.|renovate)'`.split($RS)
   s.rdoc_options = ['--charset=UTF-8']
   s.extra_rdoc_files = ['README.md', 'LICENSE.txt']
