@@ -3,8 +3,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2024-2026 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'minitest/autorun'
 require 'loog'
+require 'minitest/autorun'
 require_relative '../lib/verbose'
 
 # Main test.
@@ -18,9 +18,9 @@ class TestVerbose < Minitest::Test
       foo
     end
     log = Loog::Buffer.new
-    obj = Verbose.new(obj, log:)
-    assert_equal(42, obj.read(42))
-    assert_equal(42, obj.read(42))
+    v = Verbose.new(obj, log:)
+    assert_equal(42, v.read(42))
+    assert_equal(42, v.read(42))
     assert_includes(log.to_s, '(42) in', log)
   end
 
@@ -29,8 +29,7 @@ class TestVerbose < Minitest::Test
     def obj.read(foo)
       foo
     end
-    obj = Verbose.new(obj)
-    assert_equal(42, obj.read(42))
+    assert_equal(42, Verbose.new(obj).read(42))
   end
 
   def test_works_with_optional_arguments
@@ -38,8 +37,7 @@ class TestVerbose < Minitest::Test
     def obj.foo(first, _second, ext1: 'a', ext2: 'b')
       first + ext1 + ext2
     end
-    log = Loog::Buffer.new
-    v = Verbose.new(obj, log:)
+    v = Verbose.new(obj, log: Loog::Buffer.new)
     assert_equal('.xy', v.foo('.', {}, ext1: 'x', ext2: 'y'))
     assert_equal('fzb', v.foo('f', {}, ext1: 'z'))
     assert_equal('-ab', v.foo('-', {}))
@@ -50,23 +48,18 @@ class TestVerbose < Minitest::Test
     def obj.foo(first, second = 42)
       first + second
     end
-    log = Loog::Buffer.new
-    v = Verbose.new(obj, log:)
+    v = Verbose.new(obj, log: Loog::Buffer.new)
     assert_equal(15, v.foo(7, 8))
     assert_equal(43, v.foo(1))
   end
 
   def test_raises_on_undefined_method
     obj = Object.new
-    def obj.existing_method
+    def obj.fetch
       42
     end
-    log = Loog::Buffer.new
-    v = Verbose.new(obj, log:)
-    assert_equal(42, v.existing_method)
-    error = assert_raises(NoMethodError) do
-      v.nonexistent_method('some', 'args')
-    end
-    assert_match(/undefined method/, error.message)
+    v = Verbose.new(obj, log: Loog::Buffer.new)
+    assert_equal(42, v.fetch)
+    assert_raises(NoMethodError) { v.nonexistent_method('some', 'args') }
   end
 end

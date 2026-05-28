@@ -14,6 +14,7 @@ plugins:
   - rubocop-rake
   - rubocop-minitest
   - rubocop-performance
+  - rubocop-elegant
 Gemspec/RequiredRubyVersion:
   Enabled: false
 Metrics/AbcSize:
@@ -30,3 +31,19 @@ Style/OptionalBooleanParameter:
   Enabled: false
 Minitest/EmptyLineBeforeAssertionMethods:
   Enabled: false
+Elegant/ClassInModule:
+  Exclude:
+    - 'lib/**/*'
+    - '**/test_*.rb'
+    - '**/*Test.rb'
+Elegant/GoodMethodName:
+  AllowedNames:
+    - 'method_missing'
+    - 'respond_to?'
+    - 'respond_to_missing?'
+Elegant/NoRedundantVariable:
+  Exclude:
+    - 'test/**/*'
+Style/RequireOrder:
+  Exclude:
+    - 'Rakefile'

@@ -3,8 +3,8 @@
 # SPDX-FileCopyrightText: Copyright (c) 2024-2026 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 
-require 'time'
 require 'tago'
+require 'time'
 
 # Decorator that logs method calls to any object, providing transparency
 # into the execution flow by recording method names, parameters, and execution time.
@@ -68,21 +68,22 @@ class Verbose
       super(mtd, *args)
     end
   ensure
-    params = args.map do |a|
-      if a.is_a?(String)
-        max = 32
-        a = a.inspect
-        if a.length > max
-          "#{a[0..((max / 2) - 2)]}...#{a[((max / 2) + 1)..]}"
-        else
+    params =
+      args.map do |a|
+        if a.is_a?(String)
+          max = 32
+          a = a.inspect
+          if a.length > max
+            "#{a[0..((max / 2) - 2)]}...#{a[((max / 2) + 1)..]}"
+          else
+            a
+          end
+        elsif [Integer, Float, TrueClass, FalseClass].include?(a.class)
           a
+        else
+          a.class
         end
-      elsif [Integer, Float, TrueClass, FalseClass].include?(a.class)
-        a
-      else
-        a.class
       end
-    end
     msg = "#{@origin.class}.#{mtd}(#{params.join(', ')}) in #{start.ago}"
     if @log.respond_to?(:debug)
       @log.debug(msg)

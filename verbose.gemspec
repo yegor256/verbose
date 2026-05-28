@@ -6,7 +6,7 @@
 require 'English'
 
 Gem::Specification.new do |s|
-  s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to?(:required_rubygems_version=)
   s.required_ruby_version = '>=3.0'
   s.name = 'verbose'
   s.version = '0.0.0'
@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.files = `git ls-files | grep -v -E '^(test/|\\.|renovate)'`.split($RS)
   s.rdoc_options = ['--charset=UTF-8']
   s.extra_rdoc_files = ['README.md', 'LICENSE.txt']
-  s.add_dependency 'loog', '~>0.2'
-  s.add_dependency 'tago', '~>0.0'
+  s.add_dependency('loog', '~>0.2')
+  s.add_dependency('tago', '~>0.0')
   s.metadata['rubygems_mfa_required'] = 'true'
 end
