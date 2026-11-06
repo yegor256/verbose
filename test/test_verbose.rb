@@ -44,6 +44,19 @@ class TestVerbose < Minitest::Test
     assert_equal('ab!', v.read('a', suffix: 'b') { |value| "#{value}!" })
   end
 
+  def test_truncates_long_string_arguments
+    obj = Object.new
+    def obj.read(value)
+      value
+    end
+    log = Loog::Buffer.new
+    value = 'a' * 1000
+    assert_equal(value, Verbose.new(obj, log:).read(value))
+    argument = log.to_s[/read\((.*)\) in/, 1]
+    assert_equal(32, argument.length)
+    assert_equal("#{value.inspect[0, 15]}...#{value.inspect[-14, 14]}", argument)
+  end
+
   def test_simple_to_stdout
     obj = Object.new
     def obj.read(foo)
