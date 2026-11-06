@@ -49,7 +49,7 @@ class Verbose
     @log = log
   end
 
-  def method_missing(*args)
+  def method_missing(*args, &)
     start = Time.now
     mtd = args.shift
     if @origin.respond_to?(mtd)
@@ -57,13 +57,9 @@ class Verbose
       reqs = params.count { |p| p[0] == :req }
       keywords = %i[key keyreq keyrest]
       if params.any? { |p| keywords.include?(p[0]) } && args.size > reqs
-        @origin.__send__(mtd, *args[0...-1], **args.last) do |*a|
-          yield(*a) if block_given?
-        end
+        @origin.__send__(mtd, *args[0...-1], **args.last, &)
       else
-        @origin.__send__(mtd, *args) do |*a|
-          yield(*a) if block_given?
-        end
+        @origin.__send__(mtd, *args, &)
       end
     else
       super(mtd, *args)

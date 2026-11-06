@@ -24,6 +24,26 @@ class TestVerbose < Minitest::Test
     assert_includes(log.to_s, '(42) in', log)
   end
 
+  def test_preserves_absent_block
+    obj = Object.new
+    def obj.read(prefix = '', suffix: '')
+      [prefix, suffix, block_given?]
+    end
+    v = Verbose.new(obj, log: Loog::Buffer.new)
+    assert_equal(['', '', false], v.read)
+    assert_equal(['a', 'b', false], v.read('a', suffix: 'b'))
+  end
+
+  def test_forwards_supplied_block
+    obj = Object.new
+    def obj.read(prefix = '', suffix: '')
+      yield(prefix + suffix)
+    end
+    v = Verbose.new(obj, log: Loog::Buffer.new)
+    assert_equal('x!', v.read { |value| "#{value}x!" })
+    assert_equal('ab!', v.read('a', suffix: 'b') { |value| "#{value}!" })
+  end
+
   def test_forwards_required_keyword_arguments
     obj = Object.new
     def obj.greet(name:)
