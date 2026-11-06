@@ -24,6 +24,24 @@ class TestVerbose < Minitest::Test
     assert_includes(log.to_s, '(42) in', log)
   end
 
+  def test_forwards_required_keyword_arguments
+    obj = Object.new
+    def obj.greet(name:)
+      "hello #{name}"
+    end
+    v = Verbose.new(obj, log: Loog::Buffer.new)
+    assert_equal('hello World', v.greet(name: 'World'))
+  end
+
+  def test_forwards_keyword_rest_arguments
+    obj = Object.new
+    def obj.read(prefix, **options)
+      [prefix, options]
+    end
+    v = Verbose.new(obj, log: Loog::Buffer.new)
+    assert_equal(['a', { count: 42 }], v.read('a', count: 42))
+  end
+
   def test_simple_to_stdout
     obj = Object.new
     def obj.read(foo)
