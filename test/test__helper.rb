@@ -7,9 +7,10 @@ $stdout.sync = true
 
 ENV['RACK_ENV'] = 'test'
 
+require 'coverage'
 require 'simplecov'
 require 'simplecov-cobertura'
-unless SimpleCov.running || ARGV.include?('--no-cov')
+unless Coverage.running? || ARGV.include?('--no-cov')
   SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
     [
       SimpleCov::Formatter::HTMLFormatter,
